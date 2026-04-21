@@ -1,0 +1,40 @@
+<div class="home">
+  <div class="home__header">
+    <h1 class="home__title">Meus Boards</h1>
+    <button class="btn btn--primary" (click)="showAddForm = !showAddForm">
+      + Novo Board
+    </button>
+  </div>
+
+  <div class="add-board-form" *ngIf="showAddForm">
+    <input
+      class="input"
+      type="text"
+      placeholder="Nome do board"
+      [(ngModel)]="newBoardName"
+      (keyup.enter)="createBoard()"
+      autofocus
+    />
+    <button class="btn btn--primary" (click)="createBoard()">Criar</button>
+    <button class="btn btn--ghost" (click)="showAddForm = false">Cancelar</button>
+  </div>
+
+  <div class="boards-grid" *ngIf="boards.length > 0; else empty">
+    <div
+      class="board-card"
+      *ngFor="let board of boards"
+      (click)="openBoard(board)"
+    >
+      <span class="board-card__name">{{ board.name }}</span>
+      <button
+        class="board-card__delete"
+        title="Excluir board"
+        (click)="deleteBoard(board, $event)"
+      >×</button>
+    </div>
+  </div>
+
+  <ng-template #empty>
+    <p class="empty-state">Nenhum board ainda — crie um para começar!</p>
+  </ng-template>
+</div>

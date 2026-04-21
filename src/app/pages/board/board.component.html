@@ -1,0 +1,102 @@
+<div class="board-page">
+  <div class="board-header">
+    <h2 class="board-title">{{ board?.name ?? 'Carregando…' }}</h2>
+  </div>
+
+  <div class="board-canvas">
+    <!-- Container externo: drag-drop de colunas (horizontal) -->
+    <div
+      class="columns-row"
+      cdkDropList
+      cdkDropListOrientation="horizontal"
+      [cdkDropListData]="columns"
+      (cdkDropListDropped)="onColumnDrop($event)"
+    >
+      <!-- Cada coluna é arrastável -->
+      <div
+        class="column"
+        *ngFor="let col of columns"
+        cdkDrag
+        [cdkDragData]="col"
+      >
+        <!-- Cabeçalho da coluna (handle de drag) -->
+        <div class="column__header" cdkDragHandle>
+          <span class="column__name">{{ col.name }}</span>
+          <button class="column__delete" (click)="deleteColumn(col)" title="Excluir coluna">×</button>
+        </div>
+
+        <!-- Lista de cards (drop target para cards entre colunas) -->
+        <div
+          class="cards-list"
+          cdkDropList
+          [id]="'col-' + col.id"
+          [cdkDropListData]="col.cards"
+          [cdkDropListConnectedTo]="getCardListIds()"
+          (cdkDropListDropped)="onCardDrop($event, col)"
+        >
+          <div
+            class="card"
+            *ngFor="let card of col.cards"
+            cdkDrag
+            [cdkDragData]="card"
+          >
+            <span class="card__title">{{ card.title }}</span>
+            <button class="card__delete" (click)="deleteCard(col, card, $event)" title="Excluir card">×</button>
+          </div>
+
+          <div class="cards-list__empty" *ngIf="col.cards.length === 0">
+            Arraste cards aqui
+          </div>
+        </div>
+
+        <!-- Formulário inline: adicionar card -->
+        <div class="add-card-form" *ngIf="col.showAddCard; else addCardBtn">
+          <input
+            class="input input--small"
+            type="text"
+            placeholder="Título do card"
+            [(ngModel)]="col.newCardTitle"
+            (keyup.enter)="addCard(col)"
+            autofocus
+          />
+          <div class="add-card-form__actions">
+            <button class="btn btn--primary btn--small" (click)="addCard(col)">Adicionar</button>
+            <button class="btn btn--ghost btn--small" (click)="col.showAddCard = false">Cancelar</button>
+          </div>
+        </div>
+        <ng-template #addCardBtn>
+          <button class="add-card-btn" (click)="col.showAddCard = true">
+            + Adicionar card
+          </button>
+        </ng-template>
+      </div>
+
+      <!-- Formulário inline: adicionar coluna -->
+      <div class="column column--add">
+        <div class="add-column-form" *ngIf="showAddColumn; else addColBtn">
+          <input
+            class="input input--small"
+            type="text"
+            placeholder="Nome da coluna"
+            [(ngModel)]="newColumnName"
+            (keyup.enter)="addColumn()"
+            autofocus
+          />
+          <div class="add-card-form__actions">
+            <button class="btn btn--primary btn--small" (click)="addColumn()">Adicionar</button>
+            <button class="btn btn--ghost btn--small" (click)="showAddColumn = false">Cancelar</button>
+          </div>
+        </div>
+        <ng-template #addColBtn>
+          <button class="add-col-btn" (click)="showAddColumn = true">
+            + Adicionar coluna
+          </button>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+
+  <p class="empty-state" *ngIf="columns.length === 0">
+    Nenhuma coluna ainda — adicione uma para começar!
+  </p>
+</div>

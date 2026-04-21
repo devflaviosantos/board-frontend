@@ -1,0 +1,20 @@
+.topnav {
+  display: flex;
+  align-items: center;
+  height: 48px;
+  padding: 0 16px;
+  background: #0052cc;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.topnav__brand {
+  color: #fff;
+  font-weight: 700;
+  font-size: 1rem;
+  text-decoration: none;
+  letter-spacing: 0.5px;
+}
+
+.topnav__brand:hover {
+  opacity: 0.85;
+}

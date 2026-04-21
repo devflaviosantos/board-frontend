@@ -1,0 +1,81 @@
+.home {
+  padding: 24px 32px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.home__header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.home__title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #172b4d;
+  margin: 0;
+}
+
+.add-board-form {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  padding: 12px;
+  background: #f4f5f7;
+  border-radius: 4px;
+}
+
+.boards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.board-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  background: #0052cc;
+  border-radius: 4px;
+  cursor: pointer;
+  min-height: 80px;
+  transition: background 0.15s;
+}
+
+.board-card:hover {
+  background: #0065ff;
+}
+
+.board-card__name {
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95rem;
+  word-break: break-word;
+  flex: 1;
+}
+
+.board-card__delete {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0 4px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.board-card__delete:hover {
+  color: #fff;
+}
+
+.empty-state {
+  color: #6b778c;
+  font-size: 0.95rem;
+  margin-top: 24px;
+}
